@@ -1,0 +1,18 @@
+[
+  {
+    "skillName": "iOS",
+    "level": "beginner"
+  },
+  {
+    "skillName": "Android",
+    "level": "expert"
+  },
+  {
+    "skillName": "Java",
+    "level": "advanced"
+  },
+  {
+    "skillName": "Flutter",
+    "level": "intermediate"
+  }
+]
