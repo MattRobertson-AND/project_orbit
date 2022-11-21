@@ -40,7 +40,7 @@ class SkillBlock extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Set<Skill> skills = ref.watch(skillsViewModelProvider);
+    Set<Skill> skills = ref.watch(skillsViewModelProvider).skills;
     return Card(
         child: Padding(
       padding: const EdgeInsets.all(8.0),

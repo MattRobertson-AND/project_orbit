@@ -10,8 +10,9 @@ class SkillsService {
     try {
       var skills = await rootBundle.loadString("assets/skills/skill_list.json");
       dynamic jsonResponse = jsonDecode(skills);
-      Set<Skill> list =
-          jsonResponse.map((skillEntry) => Skill.fromJson(skillEntry)).toSet();
+      Set<Skill> list = (jsonResponse as List)
+          .map((skillEntry) => Skill.fromJson(skillEntry))
+          .toSet();
       return list;
     } on SocketException {
       throw Exception();
