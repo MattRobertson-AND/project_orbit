@@ -40,14 +40,36 @@ class ProfileWidget extends StatelessWidget {
         child: Column(children: [
           const ProfilePicture(image: "images/018.jpg"),
           const SizedBox(height: 20),
-          ElevatedButton(onPressed: () {}, child: const Text('Tech Principal')),
+          ElevatedButton(
+              onPressed: () {}, child: Text("Normal Elevated Button")),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                // Foreground color
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+              ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
+              onPressed: () {},
+              child: Text('Tech Principal',
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary))),
           const SizedBox(height: 20),
           ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor:
+                    Theme.of(context).colorScheme.onSecondaryContainer,
+                backgroundColor:
+                    Theme.of(context).colorScheme.secondaryContainer,
+              ),
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MySkills()));
               },
-              child: const Text('My Skills'))
+              child: const Text('My Skills')),
+          TextButton(
+            child: Text("Text Button"),
+            onPressed: () {},
+          ),
+          OutlinedButton(onPressed: () {}, child: Text("Outlined Button"))
         ]));
   }
 }

@@ -1,7 +1,10 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_orbit/custom_color.g.dart';
 import 'package:project_orbit/models/theme_provider.dart';
 
+import 'color_schemes.g.dart';
 import 'profile_page.dart';
 
 void main() {
@@ -15,20 +18,38 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<Pair<ThemeData, ThemeData>> theme = ref.watch(themeProvider);
+    return DynamicColorBuilder(
+        builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+      ColorScheme lightScheme;
+      ColorScheme darkScheme;
+      if (lightDynamic != null && darkDynamic != null) {
+        lightScheme = lightDynamic.harmonized();
+        lightCustomColors = lightCustomColors.harmonized(lightScheme);
 
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Project Orbit',
-        theme: theme.when(
-            data: (theme) => theme.first,
-            error: (_, __) => ThemeData.light(),
-            loading: () => ThemeData.light()),
-        themeMode: ThemeMode.system,
-        darkTheme: theme.when(
-            data: (theme) => theme.second,
-            error: (_, __) => ThemeData.dark(),
-            loading: () => ThemeData.dark()),
-        home: const SafeArea(child: HomePage()));
+        // Repeat for the dark color scheme.
+        darkScheme = darkDynamic.harmonized();
+        darkCustomColors = darkCustomColors.harmonized(darkScheme);
+      } else {
+        // Otherwise, use fallback schemes.
+        lightScheme = lightColorScheme;
+        darkScheme = darkColorScheme;
+      }
+
+      return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Project Orbit',
+          theme: ThemeData(
+              useMaterial3: true,
+              colorScheme: lightScheme,
+              extensions: [lightCustomColors]),
+          themeMode: ThemeMode.light,
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            colorScheme: darkScheme,
+            extensions: [darkCustomColors],
+          ),
+          home: const SafeArea(child: HomePage()));
+    });
   }
 }
 
